@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.buddy_notify
+.buddy_pos
+*.bak
