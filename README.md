@@ -24,6 +24,38 @@
 | Python 3.x（含 tkinter） | ✅ | 官方安装包默认自带，安装时勾选 tcl/tk |
 | Pillow | 可选 | `pip install Pillow`；装了表情包主题是彩色的，没装自动回退单色，其余功能不受影响 |
 
+## 最快接入：让 AI 帮你部署并接入流水线
+
+把下面这段 prompt **原样**发给你常用的 AI 编码助手（Claude Code / Trae / Kimi / Cursor 均可），它会帮你把宠物跑起来并接入你现有的脚本 / bot：
+
+```text
+我要部署一只桌面宠物（任务完成时放烟花庆祝），仓库地址：
+https://github.com/gaoqiongxie/desktop-work-buddy
+
+请先通读该仓库的 README.md，然后帮我完成：
+
+【部署（Windows）】
+1. git clone 到一个固定目录（如 D:\tools\desktop-work-buddy），确认 python 可用且
+   带 tkinter（python -c "import tkinter"）
+2. 可选：pip install Pillow（表情包主题彩色化，不装也能跑）
+3. 双击试跑 start.vbs（无黑窗静默启动），确认宠物出现在桌面右下角；
+   如果没配 pythonw 的 PATH，帮我定位 pythonw.exe 完整路径改好 start.vbs
+4. 帮我配开机自启：start.vbs 的快捷方式放进 shell:startup
+
+【接入我的流水线（先问我有哪些脚本/bot 要接）】
+5. 在需要通知的任务完成处加一行写入 .buddy_notify（含「完成」二字会触发烟花，
+   可追加主题名如「报表完成：金币雨」，协议详见 README）：
+   - Python: Path('.buddy_notify').write_text('构建完成', encoding='utf-8')
+   - Shell:  echo 构建完成 > .buddy_notify
+   - 其他 bot 的写入路径若不在本目录，配 BUDDY_NOTIFY_FILES 环境变量（分号分隔）
+6. 验证：让我手动 echo 一条「测试完成」到 .buddy_notify，确认宠物弹气泡+放烟花
+
+【红线】
+- 写入路径必须用绝对路径或先确认工作目录，防止通知写到了别的 .buddy_notify
+- 只加通知行，不顺手重构我的脚本
+- 接入完成后给我一份清单：哪些文件加了通知行、写入的是哪个 .buddy_notify 路径
+```
+
 ## 快速开始
 
 ```bash
